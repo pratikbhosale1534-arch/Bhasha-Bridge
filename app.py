@@ -50,6 +50,15 @@ async def guard(request: Request, call_next):
         resp.headers.setdefault("Cache-Control", "no-store")
     return resp
 
+import logging, traceback
+log = logging.getLogger("bhasha")
+
+@app.exception_handler(Exception)
+async def unexpected_error_handler(request: Request, exc: Exception):
+    ref = uuid.uuid4().hex[:8]
+    log.error("Unhandled error ref=%s path=%s\n%s", ref, request.url.path, traceback.format_exc())
+    return JSONResponse({"error": f"Unexpected server error (ref {ref}). Check the server logs for this reference."}, status_code=500)
+
 @app.exception_handler(LLMError)
 async def llm_error_handler(request: Request, exc: LLMError):
     return JSONResponse({"error": exc.message}, status_code=exc.status)
@@ -314,4 +323,8 @@ async def history_clear():
     return {"deleted": cur.rowcount}
 
 # ── Static files (MUST be last) ───────────────────────────────────────────────
-app.mount("/", StaticFiles(directory=os.path.join(BASE_DIR, "public"), html=True), name="static")
+# On Vercel, public/ is served by the CDN and may not exist inside the function bundle,
+# so only mount it when present (local runs / Docker) instead of crashing at startup.
+PUBLIC_DIR = os.path.join(BASE_DIR, "public")
+if os.path.isdir(PUBLIC_DIR):
+    app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="static")
