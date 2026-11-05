@@ -1,0 +1,11 @@
+# Submission checklist
+- [ ] `.env` created locally with real IBM key + Project ID (**never** commit; `.gitignore` covers it)
+- [ ] **Live IBM check** passes (README) — record model ID and region used
+- [ ] Translate a sample to Hindi and Marathi with real Granite; have a fluent speaker rate it; note findings honestly
+- [ ] Confirm Lite token quota shown in your IBM Cloud usage page (docs disagree: 50k vs 300k)
+- [ ] `python -m pytest tests -q` green; `python tests/e2e.py mock` green
+- [ ] Deployed URL (Render/Docker) works; env vars set on host; `/api/status` shows `granite`
+- [ ] Screenshots: banner, side-by-side, glossary, history, mobile
+- [ ] Demo video/script rehearsed to ≤3 min; fallback demo mode ready
+- [ ] README, architecture, Responsible AI section included; limitations stated
+- [ ] Rotate the IBM API key after the event if it was ever shared

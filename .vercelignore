@@ -1,0 +1,10 @@
+.env
+.venv
+tests
+docs
+screens
+*.db
+__pycache__
+check.py
+check_models.py
+debug_ibm.py

@@ -1,0 +1,16 @@
+# Newton's Laws of Motion
+
+Newton's laws describe the relationship between a body and the forces acting on it.
+
+## First Law (Inertia)
+- An object at rest stays at rest unless acted on by a net force.
+- The SI unit of force is the newton (N).
+
+## Second Law
+The net force equals mass times acceleration: F = m * a. For a 2 kg mass accelerating at 3 m/s^2, F = 6 N.
+
+## Python example
+```python
+def force(mass, acceleration):
+    return mass * acceleration
+```

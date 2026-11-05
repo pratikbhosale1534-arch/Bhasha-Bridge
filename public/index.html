@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bhasha Bridge — Multilingual Course Translator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="logo-mark" aria-hidden="true">BB</div>
+    <span class="logo-text">Bhasha Bridge</span>
+    <span class="logo-sub">Multilingual Course Translator · IBM Granite</span>
+  </header>
+  <main class="container">
+<div id="page-translator">
+      <div>
+        <h1 class="page-title">Course Content Translator</h1>
+        <p class="page-sub">Upload a course document, translate it between English, Hindi, Marathi and more with IBM Granite, and get plain-language explanations.</p>
+      </div>
+
+      <div id="trAiBanner" class="tr-banner" role="status" aria-live="polite">Checking AI status…</div>
+      <div id="trError" class="tr-error hidden" role="alert"></div>
+
+      <section class="tr-card" aria-labelledby="trH1">
+        <h2 id="trH1" class="tr-h">1 · Add a study document</h2>
+        <div class="dropzone" id="trDrop" tabindex="0" role="button" aria-label="Upload a PDF, DOCX, PPTX or TXT file. Press Enter to browse.">
+          <div class="dz-icon">⬆</div>
+          <p><strong>Drop a file here</strong> or click to browse</p>
+          <p class="dz-hint">PDF · DOCX · PPTX · TXT — <span id="trLimit">up to 10 MB</span></p>
+        </div>
+        <input type="file" id="trFile" accept=".pdf,.docx,.pptx,.txt" hidden />
+        <div class="tr-samples"><span class="tr-muted">Or try a sample:</span> <span id="trSamples"></span></div>
+        <div id="trDocInfo" class="tr-docinfo hidden"></div>
+      </section>
+
+      <section class="tr-card" aria-labelledby="trH2">
+        <h2 id="trH2" class="tr-h">2 · Choose languages</h2>
+        <div class="tr-row">
+          <label class="tr-field">From <select id="trSrc" class="form-select"></select></label>
+          <button class="btn-secondary" id="trSwap" aria-label="Swap languages" title="Swap languages">⇄</button>
+          <label class="tr-field">To <select id="trTgt" class="form-select"></select></label>
+          <label class="tr-field">Simplify level
+            <select id="trLevel" class="form-select"><option value="simple">Student-friendly</option><option value="very_simple">Very simple (beginner)</option></select>
+          </label>
+        </div>
+        <p id="trLangNote" class="tr-note hidden"></p>
+      </section>
+
+      <section class="tr-card hidden" id="trWork" aria-labelledby="trH3">
+        <h2 id="trH3" class="tr-h">3 · Translate &amp; study</h2>
+        <div class="tr-toolbar">
+          <label class="tr-check"><input type="checkbox" id="trAll" checked /> Select all sections</label>
+          <button class="btn-primary" id="trRunT">Translate selected</button>
+          <button class="btn-secondary" id="trRunS" title="AI re-explains the text in simple language. This is NOT a translation.">Simplify selected</button>
+          <button class="btn-secondary" id="trRunG">Build glossary</button>
+          <button class="btn-secondary hidden" id="trStop">Stop</button>
+        </div>
+        <div class="tr-progress hidden" id="trProg" aria-live="polite">
+          <div class="progress-bar"><div class="progress-fill" id="trProgFill"></div></div>
+          <span id="trProgText"></span>
+        </div>
+        <div id="trSections" class="tr-sections"></div>
+
+        <div id="trGlossBox" class="tr-gloss hidden"><h3>Glossary <span class="badge">AI-generated</span></h3><div id="trGloss" class="tr-table-wrap"></div></div>
+
+        <div class="tr-download">
+          <h3>Download</h3>
+          <div class="tr-row">
+            <label class="tr-field">Content <select id="trDlWhat" class="form-select"><option value="translation">Translation</option><option value="simplification">Simplified version</option></select></label>
+            <label class="tr-field">Format <select id="trDlFmt" class="form-select"><option value="docx">Word (.docx)</option><option value="md">Markdown (.md)</option><option value="txt">Text (.txt)</option><option value="html">HTML (.html)</option></select></label>
+            <label class="tr-check"><input type="checkbox" id="trDlGloss" checked /> Include glossary</label>
+            <button class="btn-primary" id="trDl">Download</button>
+          </div>
+        </div>
+</section>
+
+      <section class="tr-card" aria-labelledby="trH4">
+        <div class="tr-row tr-between"><h2 id="trH4" class="tr-h">Document history</h2><button class="btn-secondary" id="trHistClear">Clear all</button></div>
+        <p class="tr-muted" id="trHistNote"></p>
+        <div id="trHist" class="tr-hist"></div>
+        <div id="trHistView" class="hidden tr-histview"></div>
+      </section>
+
+      <details class="tr-card tr-rai" open>
+        <summary>Responsible AI &amp; your data</summary>
+        <ul>
+          <li><strong>Translations can be wrong.</strong> They are produced by an AI model (IBM Granite). Hindi, Marathi and other Indian languages are <em>not</em> on IBM's official Granite language list, so quality is lower. Have a fluent speaker review anything important, especially formulas, units and numbers.</li>
+          <li><strong>Translation ≠ simplification.</strong> “Translate” keeps the meaning and structure. “Simplify” is an AI-written re-explanation that can leave out detail or add mistakes.</li>
+          <li><strong>Your files:</strong> processed in server memory only and never saved. Text you translate is sent to IBM watsonx.ai. Only the <em>translated</em> output is kept in history (never the original file), and it is deleted automatically after the retention period or when you delete it.</li>
+          <li><strong>API keys</strong> live only in server environment variables and are never sent to your browser.</li>
+        </ul>
+      </details>
+    </div>
+  </main>
+  <script src="translator.js"></script>
+</body>
+</html>

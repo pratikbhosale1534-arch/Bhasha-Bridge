@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+*.db
+__pycache__/
+.pytest_cache/
+.venv/
+.vercel/
+check.py
+check_models.py
+debug_ibm.py
