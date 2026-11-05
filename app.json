@@ -1,0 +1,34 @@
+{
+  "name": "Bhasha Bridge",
+  "description": "Multilingual course content translator (PDF/DOCX/PPTX/TXT) powered by IBM Granite on watsonx.ai. IBM SkillsBuild AICTE-2026, Problem Statement #17.",
+  "keywords": ["fastapi", "python", "translation", "ibm-granite", "watsonx", "education"],
+  "stack": "heroku-24",
+  "buildpacks": [{ "url": "heroku/python" }],
+  "formation": {
+    "web": { "quantity": 1, "size": "basic" }
+  },
+  "env": {
+    "WATSONX_API_KEY": {
+      "description": "IBM Cloud API key (IBM Cloud > Manage > Access (IAM) > API keys). Leave empty to run in labelled DEMO MODE.",
+      "required": false
+    },
+    "WATSONX_PROJECT_ID": {
+      "description": "watsonx.ai project ID (project > Manage > General). The project must be linked to a watsonx.ai Runtime in the same region.",
+      "required": false
+    },
+    "WATSONX_URL": {
+      "description": "Regional endpoint of your watsonx.ai Runtime, e.g. https://eu-de.ml.cloud.ibm.com (must match your project's region).",
+      "value": "https://eu-de.ml.cloud.ibm.com"
+    },
+    "WATSONX_MODEL_ID": { "description": "Granite model to use.", "value": "ibm/granite-4-h-small" },
+    "WATSONX_API_VERSION": { "value": "2024-05-31" },
+    "DEMO_MODE": { "description": "Set to true to force labelled demo mode (no IBM calls).", "required": false },
+    "MAX_UPLOAD_MB": { "value": "10" },
+    "MAX_DOC_CHARS": { "value": "60000" },
+    "HISTORY_RETENTION_DAYS": { "value": "7" },
+    "RATE_LIMIT_PER_MIN": { "value": "40" }
+  },
+  "healthchecks": {
+    "web": [{ "type": "startup", "name": "status", "path": "/api/status", "initialDelay": 5, "timeout": 5, "attempts": 3 }]
+  }
+}
